@@ -51,23 +51,39 @@
     <div class="slide-number">02 / 12</div>
 </div>
 
-<!-- 03 實戰案例一：客服 -->
+<!-- 03 實戰案例一：機票查詢 -->
 <div class="slide-container">
-    <h2 class="slide-title">場景一：全通路智慧客服代理</h2>
+    <h2 class="slide-title">場景一：自主機票監控代理</h2>
     <div class="content-area">
         <div class="two-column">
             <div class="case-card">
-                <span class="tag">零售與電商</span>
-                <h3>「從回覆問題到解決問題」</h3>
+                <span class="tag">旅遊與出行</span>
+                <h3>「設定目標，AI 替你盯緊最低價」</h3>
                 <ul>
-                    <li><strong>自主查單：</strong> AI 直接進入後台查詢物流與退貨進度。</li>
-                    <li><strong>自動補發：</strong> 在授權範圍內，AI 可主動為用戶執行補發或退款操作。</li>
-                    <li><strong>多國翻譯：</strong> 基於即時翻譯模型，提供跨語言的無縫溝通體驗。</li>
+                    <li><strong>自主比價：</strong> 跨平台掃描近期航班，自動篩選最低票價區間與最佳出發時段。</li>
+                    <li><strong>條件過濾：</strong> 依艙等、轉機次數、出發機場等條件智慧排序，排除不符需求的選項。</li>
+                    <li><strong>即時推播：</strong> 發現符合條件的票價，自動將比較結果與購票連結轉發至 Slack 頻道。</li>
                 </ul>
             </div>
-            <div class="placeholder-box">
-                <i class="fa-solid fa-headset" style="font-size: 60px;"></i>
-                <span>智慧客服系統界面演示</span>
+            <div class="placeholder-box" style="gap: 0;">
+                <div style="width: 100%; padding: 24px 28px; display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <i class="fa-brands fa-slack" style="font-size: 28px; color: #4A154B;"></i>
+                        <span style="font-size: 15px; color: #94A3B8; font-weight: 700;"># travel-deals</span>
+                    </div>
+                    <div style="background: #1E293B; border-radius: 12px; padding: 16px; border-left: 4px solid #10B981;">
+                        <p style="margin: 0 0 6px; font-size: 13px; color: #10B981; font-weight: 700;">✈ AI 機票代理 · 剛剛</p>
+                        <p style="margin: 0 0 8px; font-size: 14px; color: #F8FAFC;">找到 TPE → NRT 近期最低價</p>
+                        <p style="margin: 0; font-size: 22px; color: #10B981; font-weight: 700;">NT$ 4,280 <span style="font-size: 13px; color: #64748B;">/ 人（直飛）</span></p>
+                        <p style="margin: 6px 0 0; font-size: 13px; color: #64748B;">出發：2026-05-03 ｜ 回程：2026-05-07 ｜ 長榮航空</p>
+                    </div>
+                    <div style="background: #1E293B; border-radius: 12px; padding: 16px; border-left: 4px solid #3B82F6;">
+                        <p style="margin: 0 0 6px; font-size: 13px; color: #3B82F6; font-weight: 700;">✈ AI 機票代理 · 3 分鐘前</p>
+                        <p style="margin: 0 0 8px; font-size: 14px; color: #F8FAFC;">TPE → TYO 備選方案（1 轉）</p>
+                        <p style="margin: 0; font-size: 22px; color: #3B82F6; font-weight: 700;">NT$ 3,150 <span style="font-size: 13px; color: #64748B;">/ 人</span></p>
+                        <p style="margin: 6px 0 0; font-size: 13px; color: #64748B;">出發：2026-05-04 ｜ 回程：2026-05-08 ｜ 中華航空</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
