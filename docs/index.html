@@ -10,142 +10,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { box-sizing: border-box; }
-        body { background-color: #020617; margin: 0; padding: 20px 0; display: grid; gap: 40px; grid-template-columns: 1fr; place-items: center; font-family: 'Inter', 'Noto+Sans+TC', sans-serif; }
+        body { background-color: #020617; margin: 0; padding: 20px 0; display: grid; gap: 40px; grid-template-columns: 1fr; place-items: center; font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .slide-container { width: 1280px; height: 720px; background-color: #0A0F1E; color: #F8FAFC; padding: 60px; overflow: hidden; position: relative; display: flex; flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
         .slide-title { font-size: 48px; margin-bottom: 30px; background: linear-gradient(90deg, #F8FAFC 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 2; font-weight: 700; }
         .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; z-index: 2; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .placeholder-box { border-radius: 20px; border: 2px dashed rgba(255, 255, 255, 0.1); height: 400px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.02); color: #475569; font-size: 18px; }
+        .placeholder-box { border-radius: 20px; border: 2px dashed rgba(255, 255, 255, 0.1); height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.02); color: #475569; font-size: 18px; gap: 16px; }
         .tile { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 24px; }
         .case-card { background: rgba(255, 255, 255, 0.03); border-left: 5px solid #3B82F6; padding: 30px; border-radius: 0 20px 20px 0; }
-        .case-card h3 { font-size: 32px; color: #3B82F6; margin-bottom: 15px; }
+        .case-card h3 { font-size: 28px; color: #3B82F6; margin: 0 0 15px; }
         .tag { display: inline-block; background: rgba(59, 130, 246, 0.2); color: #60A5FA; padding: 5px 15px; border-radius: 50px; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; }
-        ul { list-style: none; padding: 0; }
+        ul { list-style: none; padding: 0; margin: 0; }
         li { margin-bottom: 15px; padding-left: 35px; position: relative; font-size: 20px; color: #CBD5E1; }
         li::before { content: '→'; position: absolute; left: 0; color: #3B82F6; font-weight: 700; }
         .stats-highlight { font-size: 120px; font-weight: 700; color: #10B981; line-height: 1; }
+        .slide-number { position: absolute; bottom: 24px; right: 40px; font-size: 14px; color: #334155; z-index: 2; letter-spacing: 2px; }
+        .section-label { font-size: 16px; color: #3B82F6; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; }
     </style>
 </head>
 <body>
 
+<!-- 01 封面 -->
 <div class="slide-container">
     <div style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center;">
-        <p style="font-size: 28px; color: #3B82F6; letter-spacing: 4px; font-weight: 500;">FUTURE OF AI 2026</p>
-        <h1 style="font-size: 84px; margin: 20px 0; font-weight: 700;">從「對話」到「行動」</h1>
+        <p style="font-size: 18px; color: #3B82F6; letter-spacing: 6px; font-weight: 500; text-transform: uppercase;">Future of AI · 2026</p>
+        <h1 style="font-size: 84px; margin: 20px 0; font-weight: 700; line-height: 1.1;">從「對話」到「行動」</h1>
         <p style="font-size: 24px; color: #94A3B8;">掌握 Agentic Workflow 與自主智能體實戰</p>
     </div>
+    <div class="slide-number">01 / 12</div>
 </div>
 
+<!-- 02 先看成果（章節分隔） -->
 <div class="slide-container">
-    <div style="text-align: center; justify-content: center; display: flex; flex-direction: column; height: 100%;">
-        <h2 style="font-size: 72px; color: #F8FAFC;">01 核心趨勢：<br>AI 的下一個黃金時代</h2>
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <p class="section-label">Part 1</p>
+        <h2 style="font-size: 72px; color: #F8FAFC; line-height: 1.2;">先看成果<br><span style="color: #3B82F6;">三個真實場景</span></h2>
         <div style="width: 100px; height: 6px; background: #3B82F6; margin: 40px auto;"></div>
+        <p style="color: #64748B; font-size: 20px;">AI 代理能做什麼？讓案例說話。</p>
     </div>
+    <div class="slide-number">02 / 12</div>
 </div>
 
+<!-- 03 實戰案例一：客服 -->
 <div class="slide-container">
-    <h2 class="slide-title">關鍵轉向：自主性的誕生</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <ul>
-                    <li><strong>主動執行：</strong> AI 不再只是等待提問，而是能根據目標自主拆解步驟。</li>
-                    <li><strong>工具調度：</strong> 透過 MCP 協議，AI 具備了操控軟體與資料庫的權限。</li>
-                    <li><strong>長期任務：</strong> 能夠處理跨越多個軟體、耗時較長的複雜工作流。</li>
-                </ul>
-            </div>
-            <div class="placeholder-box">
-                <i class="fa-solid fa-robot" style="font-size: 60px; margin-bottom: 20px;"></i>
-                <span>視覺化架構圖：自主執行流程</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">2024 聊天機器人 vs 2026 智能代理</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="tile">
-                <h3 style="color: #94A3B8;">過去：對話中心</h3>
-                <p>提供建議、撰寫草稿、需要頻繁的人工複製貼上。AI 是「諮詢者」。</p>
-            </div>
-            <div class="tile" style="border-color: #3B82F6; background: rgba(59, 130, 246, 0.05);">
-                <h3 style="color: #3B82F6;">現在：行動導向</h3>
-                <p>自動對帳、跨軟體操作、交付完整成果。AI 是「代理人」。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">MCP：打通數據孤島的關鍵</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="placeholder-box">
-                <i class="fa-solid fa-plug-circle-bolt" style="font-size: 60px;"></i>
-                <span>MCP 協議：模型與數據的通用連接器</span>
-            </div>
-            <div>
-                <h3>Model Context Protocol</h3>
-                <p>這是一個通用的「插座」，讓不同模型可以安全、標準化地存取您的企業數據（如 Slack, Drive, GitHub）。</p>
-                <p><strong>價值：</strong> 讓 AI 終於擁有了完整的上下文意識與即時數據庫。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">Agent 的核心運作架構</h2>
-    <div class="content-area">
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-            <div class="tile">
-                <i class="fa-solid fa-brain" style="font-size: 40px; color: #3B82F6; margin-bottom: 20px;"></i>
-                <h4>規劃 (Planning)</h4>
-                <p>將宏大目標拆解成可執行的子任務清單。</p>
-            </div>
-            <div class="tile">
-                <i class="fa-solid fa-wrench" style="font-size: 40px; color: #10B981; margin-bottom: 20px;"></i>
-                <h4>工具調用 (Tools)</h4>
-                <p>自動選擇並執行 API、腳本或瀏覽器操作。</p>
-            </div>
-            <div class="tile">
-                <i class="fa-solid fa-arrows-rotate" style="font-size: 40px; color: #F59E0B; margin-bottom: 20px;"></i>
-                <h4>自我修正 (Reflection)</h4>
-                <p>執行後檢查錯誤，根據結果動態調整下一步。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">生產力的量變到質變</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <div class="stats-highlight">91%</div>
-                <p style="font-size: 24px;">重複性行政流程的自動化率</p>
-            </div>
-            <div>
-                <p>在 Agentic Workflow 的架構下，原本需要 4 小時的手工報表與跨部門對帳工作，現在僅需 15 分鐘的後台執行加上 5 分鐘的人工確認。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">隱私與速度：本地 AI 的崛起</h2>
-    <div class="content-area">
-        <p>並非所有機密都需要上雲端。2026 年的主流是「混合部署」。</p>
-        <div class="tile" style="margin-top: 20px;">
-            <p><strong>本地處理 (Ollama)：</strong> 處理核心機密數據、公司私人合約，確保資料不落地。</p>
-            <p><strong>雲端調度：</strong> 處理需要超強邏輯的大型專案規劃或跨國協作。</p>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container">
-    <h2 class="slide-title">實戰案例一：全通路智慧客服代理</h2>
+    <h2 class="slide-title">場景一：全通路智慧客服代理</h2>
     <div class="content-area">
         <div class="two-column">
             <div class="case-card">
@@ -163,10 +71,12 @@
             </div>
         </div>
     </div>
+    <div class="slide-number">03 / 12</div>
 </div>
 
+<!-- 04 實戰案例二：供應鏈 -->
 <div class="slide-container">
-    <h2 class="slide-title">實戰案例二：自主供應鏈與庫存管理</h2>
+    <h2 class="slide-title">場景二：自主供應鏈與庫存管理</h2>
     <div class="content-area">
         <div class="two-column">
             <div class="placeholder-box">
@@ -174,29 +84,31 @@
                 <span>供應鏈數據監測看板</span>
             </div>
             <div class="case-card" style="border-left-color: #10B981;">
-                <span class="tag">供應鏈管理</span>
-                <h3>「24/7 的數據自動化巡邏」</h3>
+                <span class="tag" style="background: rgba(16,185,129,0.2); color: #34D399;">供應鏈管理</span>
+                <h3 style="color: #10B981;">「24/7 的數據自動化巡邏」</h3>
                 <ul>
                     <li><strong>預判需求：</strong> 結合市場趨勢自動調整庫存水位。</li>
                     <li><strong>自動採購：</strong> 庫存低於警戒線時，AI 自動向供應商詢價並草擬訂單。</li>
-                    <li><strong>異常報警：</strong> 當物流出現延遲風險，AI 自動重新調度備用運輸資源。</li>
+                    <li><strong>異常報警：</strong> 物流延遲時，AI 自動重新調度備用運輸資源。</li>
                 </ul>
             </div>
         </div>
     </div>
+    <div class="slide-number">04 / 12</div>
 </div>
 
+<!-- 05 實戰案例三：軟體開發 -->
 <div class="slide-container">
-    <h2 class="slide-title">實戰案例三：自主軟體工程與開發</h2>
+    <h2 class="slide-title">場景三：自主軟體工程與開發</h2>
     <div class="content-area">
         <div class="two-column">
             <div class="case-card" style="border-left-color: #F59E0B;">
-                <span class="tag">IT 與軟體開發</span>
-                <h3>「交付功能，而非只是代碼片段」</h3>
+                <span class="tag" style="background: rgba(245,158,11,0.2); color: #FCD34D;">IT 與軟體開發</span>
+                <h3 style="color: #F59E0B;">「交付功能，而非只是代碼片段」</h3>
                 <ul>
                     <li><strong>自主除錯：</strong> AI 自動定位 GitHub 上的 Bug 並嘗試修復與測試。</li>
-                    <li><strong>端到端開發：</strong> 給予功能描述，AI 構建前端介面、後端邏輯與資料庫 Schema。</li>
-                    <li><strong>文件同步：</strong> 在代碼更新時，AI 同步生成對應的技術說明文件。</li>
+                    <li><strong>端到端開發：</strong> 給予功能描述，AI 構建前端、後端與資料庫 Schema。</li>
+                    <li><strong>文件同步：</strong> 代碼更新時，AI 同步生成對應的技術說明文件。</li>
                 </ul>
             </div>
             <div class="placeholder-box">
@@ -205,18 +117,153 @@
             </div>
         </div>
     </div>
+    <div class="slide-number">05 / 12</div>
 </div>
 
-<div class="slide-container" style="text-align: center;">
+<!-- 06 技術解析（章節分隔） -->
+<div class="slide-container">
+    <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+        <p class="section-label">Part 2</p>
+        <h2 style="font-size: 72px; color: #F8FAFC; line-height: 1.2;">為什麼現在<br><span style="color: #3B82F6;">才成為可能？</span></h2>
+        <div style="width: 100px; height: 6px; background: #3B82F6; margin: 40px auto;"></div>
+        <p style="color: #64748B; font-size: 20px;">三項核心技術突破，讓 AI 從諮詢者變成代理人。</p>
+    </div>
+    <div class="slide-number">06 / 12</div>
+</div>
+
+<!-- 07 2024 vs 2026 對比 -->
+<div class="slide-container">
+    <h2 class="slide-title">關鍵轉變：從對話工具到自主代理</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="tile">
+                <p style="font-size: 14px; color: #64748B; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 16px;">2024 聊天機器人</p>
+                <h3 style="color: #94A3B8; font-size: 26px; margin: 0 0 16px;">對話中心</h3>
+                <p style="color: #64748B; font-size: 18px;">提供建議、撰寫草稿、需要頻繁的人工複製貼上。AI 是「諮詢者」。</p>
+            </div>
+            <div class="tile" style="border-color: #3B82F6; background: rgba(59, 130, 246, 0.05);">
+                <p style="font-size: 14px; color: #3B82F6; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 16px;">2026 智能代理</p>
+                <h3 style="color: #3B82F6; font-size: 26px; margin: 0 0 16px;">行動導向</h3>
+                <p style="color: #94A3B8; font-size: 18px;">自動對帳、跨軟體操作、交付完整成果。AI 是「代理人」。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">07 / 12</div>
+</div>
+
+<!-- 08 Agent 架構 -->
+<div class="slide-container">
+    <h2 class="slide-title">Agent 的核心運作架構</h2>
+    <div class="content-area">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <div class="tile">
+                <i class="fa-solid fa-brain" style="font-size: 40px; color: #3B82F6; margin-bottom: 20px; display: block;"></i>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">規劃 Planning</h4>
+                <p style="color: #94A3B8;">將宏大目標拆解成可執行的子任務清單。</p>
+            </div>
+            <div class="tile">
+                <i class="fa-solid fa-wrench" style="font-size: 40px; color: #10B981; margin-bottom: 20px; display: block;"></i>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">工具調用 Tools</h4>
+                <p style="color: #94A3B8;">自動選擇並執行 API、腳本或瀏覽器操作。</p>
+            </div>
+            <div class="tile">
+                <i class="fa-solid fa-arrows-rotate" style="font-size: 40px; color: #F59E0B; margin-bottom: 20px; display: block;"></i>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">自我修正 Reflection</h4>
+                <p style="color: #94A3B8;">執行後檢查錯誤，根據結果動態調整下一步。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">08 / 12</div>
+</div>
+
+<!-- 09 MCP -->
+<div class="slide-container">
+    <h2 class="slide-title">MCP：打通數據孤島的關鍵</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="placeholder-box">
+                <i class="fa-solid fa-plug-circle-bolt" style="font-size: 60px;"></i>
+                <span>MCP 協議：模型與數據的通用連接器</span>
+            </div>
+            <div>
+                <h3 style="font-size: 28px; margin: 0 0 20px;">Model Context Protocol</h3>
+                <p style="color: #94A3B8; font-size: 20px; line-height: 1.7;">這是一個通用的「插座」，讓不同模型可以安全、標準化地存取您的企業數據（如 Slack、Drive、GitHub）。</p>
+                <div class="tile" style="margin-top: 24px;">
+                    <p style="margin: 0; font-size: 18px;"><strong style="color: #3B82F6;">核心價值：</strong> 讓 AI 擁有完整的上下文意識與即時數據庫，從而真正「理解」您的業務。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">09 / 12</div>
+</div>
+
+<!-- 10 隱私與混合部署 -->
+<div class="slide-container">
+    <h2 class="slide-title">隱私與速度：混合部署的最佳實踐</h2>
+    <div class="content-area">
+        <p style="color: #94A3B8; font-size: 20px; margin-bottom: 30px;">並非所有機密都需要上雲端。2026 年的主流是「混合部署」策略。</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div class="tile" style="border-color: rgba(16,185,129,0.3);">
+                <i class="fa-solid fa-lock" style="font-size: 32px; color: #10B981; margin-bottom: 16px; display: block;"></i>
+                <h4 style="font-size: 20px; color: #10B981; margin: 0 0 12px;">本地處理 (Ollama)</h4>
+                <p style="color: #94A3B8;">核心機密數據、公司私人合約，確保資料不離境。</p>
+            </div>
+            <div class="tile" style="border-color: rgba(59,130,246,0.3);">
+                <i class="fa-solid fa-cloud" style="font-size: 32px; color: #3B82F6; margin-bottom: 16px; display: block;"></i>
+                <h4 style="font-size: 20px; color: #3B82F6; margin: 0 0 12px;">雲端調度</h4>
+                <p style="color: #94A3B8;">需要超強邏輯的大型規劃或跨國協作任務。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">10 / 12</div>
+</div>
+
+<!-- 11 量化成果 -->
+<div class="slide-container">
+    <h2 class="slide-title">生產力的量變到質變</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div style="text-align: center;">
+                <div class="stats-highlight">91%</div>
+                <p style="font-size: 22px; color: #94A3B8; margin-top: 12px;">重複性行政流程的自動化率</p>
+            </div>
+            <div>
+                <div class="tile" style="border-color: rgba(16,185,129,0.3);">
+                    <p style="font-size: 20px; color: #94A3B8; line-height: 1.8; margin: 0;">原本需要 <strong style="color: #F8FAFC;">4 小時</strong>的手工報表與跨部門對帳工作，在 Agentic Workflow 架構下，現在僅需：</p>
+                    <p style="margin: 20px 0 0; font-size: 22px;"><span style="color: #10B981; font-weight: 700;">15 分鐘</span> 後台執行　＋　<span style="color: #10B981; font-weight: 700;">5 分鐘</span> 人工確認</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">11 / 12</div>
+</div>
+
+<!-- 12 行動號召 -->
+<div class="slide-container">
     <h2 class="slide-title">立即啟動：您的 AI 實戰清單</h2>
     <div class="content-area">
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;">
-            <div class="tile"><h4>1. 試驗</h4><p>部署 Ollama 並測試本地端模型的反應速度與隱私保護。</p></div>
-            <div class="tile"><h4>2. 連接</h4><p>嘗試利用 MCP 協議打通第一個數據孤島，讓 AI 認識您的數據。</p></div>
-            <div class="tile"><h4>3. 委派</h4><p>找出最耗時的重複性工作流程，嘗試以 Agent 思維進行重構。</p></div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+            <div class="tile">
+                <p style="font-size: 13px; color: #3B82F6; letter-spacing: 3px; margin: 0 0 12px;">STEP 01</p>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">試驗</h4>
+                <p style="color: #94A3B8;">部署 Ollama 並測試本地端模型的反應速度與隱私保護。</p>
+            </div>
+            <div class="tile">
+                <p style="font-size: 13px; color: #3B82F6; letter-spacing: 3px; margin: 0 0 12px;">STEP 02</p>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">連接</h4>
+                <p style="color: #94A3B8;">利用 MCP 協議打通第一個數據孤島，讓 AI 認識您的數據。</p>
+            </div>
+            <div class="tile">
+                <p style="font-size: 13px; color: #3B82F6; letter-spacing: 3px; margin: 0 0 12px;">STEP 03</p>
+                <h4 style="font-size: 22px; margin: 0 0 12px;">委派</h4>
+                <p style="color: #94A3B8;">找出最耗時的重複性工作流程，以 Agent 思維進行重構。</p>
+            </div>
         </div>
-        <h1 style="margin-top: 60px; font-size: 32px; color: #3B82F6;">贏在 2026：將 AI 從對話對象變為實戰戰友。</h1>
+        <div style="margin-top: 50px; text-align: center; padding: 24px; border: 1px solid rgba(59,130,246,0.3); border-radius: 16px; background: rgba(59,130,246,0.05);">
+            <p style="font-size: 28px; color: #3B82F6; margin: 0; font-weight: 700;">贏在 2026：將 AI 從對話對象變為實戰戰友。</p>
+        </div>
     </div>
+    <div class="slide-number">12 / 12</div>
 </div>
 
 </body>
