@@ -43,6 +43,12 @@
           <legend>From</legend>
           <input class="inp" data-bind="fromName" placeholder="Your name or company" />
           <textarea class="inp" data-bind="fromDetails" rows="3" placeholder="Address, email, tax ID"></textarea>
+          <label class="logo-upload-label">
+            <span class="lbl-text">Logo <span class="lbl-hint">(optional, stays on your device)</span></span>
+            <input id="logoInput" type="file" accept="image/*" class="logo-input" />
+            <span id="logoStatus" class="logo-status">No logo added</span>
+            <button id="clearLogoBtn" class="btn btn-ghost btn-xs" type="button" hidden>Remove</button>
+          </label>
         </fieldset>
 
         <fieldset class="field-group">
@@ -90,6 +96,7 @@
       <article id="sheet" class="sheet">
         <header class="sheet-head">
           <div>
+            <img id="pLogo" class="sheet-logo" src="" alt="" hidden />
             <p class="sheet-label">Invoice</p>
             <p id="pNumber" class="sheet-number">INV-001</p>
           </div>

@@ -4,6 +4,7 @@
 // State lives in localStorage; no network, no account.
 
 const STORAGE_KEY = "quickinvoice.v1";
+const LOGO_KEY = "quickinvoice.logo";
 
 const defaultState = () => ({
   fromName: "",
@@ -237,9 +238,54 @@ function init() {
     if (!confirm("Clear this invoice and start over?")) return;
     state = defaultState();
     saveState(state);
+    try { localStorage.removeItem(LOGO_KEY); } catch {}
+    applyLogo("");
+    logoInput.value = "";
     syncTopFields(state);
     renderItemsEditor(state);
     renderPreview(state);
+  });
+
+  // Logo upload
+  const logoInput = $("logoInput");
+  const logoStatus = $("logoStatus");
+  const clearLogoBtn = $("clearLogoBtn");
+
+  function applyLogo(dataUrl) {
+    const img = $("pLogo");
+    if (dataUrl) {
+      img.src = dataUrl;
+      img.hidden = false;
+      logoStatus.textContent = "Logo uploaded";
+      logoStatus.classList.add("has-logo");
+      clearLogoBtn.hidden = false;
+    } else {
+      img.src = "";
+      img.hidden = true;
+      logoStatus.textContent = "No logo added";
+      logoStatus.classList.remove("has-logo");
+      clearLogoBtn.hidden = true;
+    }
+  }
+
+  applyLogo(localStorage.getItem(LOGO_KEY) || "");
+
+  logoStatus.addEventListener("click", () => logoInput.click());
+  logoInput.addEventListener("change", () => {
+    const file = logoInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      try { localStorage.setItem(LOGO_KEY, dataUrl); } catch {}
+      applyLogo(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  });
+  clearLogoBtn.addEventListener("click", () => {
+    try { localStorage.removeItem(LOGO_KEY); } catch {}
+    logoInput.value = "";
+    applyLogo("");
   });
 
   renderItemsEditor(state);
