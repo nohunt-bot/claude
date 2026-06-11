@@ -220,6 +220,19 @@ function init() {
 
   $("printBtn").addEventListener("click", () => window.print());
 
+  $("shareBtn").addEventListener("click", () => {
+    const url = "https://nohunt-bot.github.io/claude/quickinvoice/";
+    if (navigator.share) {
+      navigator.share({ title: "QuickInvoice", text: "Free invoice generator — no signup, runs in your browser.", url });
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = $("shareBtn");
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Share"; }, 2000);
+      });
+    }
+  });
+
   $("resetBtn").addEventListener("click", () => {
     if (!confirm("Clear this invoice and start over?")) return;
     state = defaultState();
