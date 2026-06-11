@@ -253,6 +253,11 @@ textarea.inp { resize: vertical; line-height: 1.45; }
   background: color-mix(in oklch, var(--accent) 3%, var(--bg));
 }
 .seo-foot p { margin: 0; }
+.seo-guide-link {
+  margin: 2.6rem 0 0; padding-top: 1.6rem; border-top: 1px solid var(--line);
+  font-size: 1rem; line-height: 1.6; color: var(--ink-soft);
+}
+.seo-guide-link a { color: var(--accent); font-weight: 560; }
 @media (prefers-reduced-motion: reduce) {
   .faq-item summary::after { transition: none; }
 }
