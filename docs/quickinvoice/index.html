@@ -146,6 +146,69 @@
     </section>
   </main>
 
+  <section class="seo no-print" aria-labelledby="about-heading">
+    <div class="seo-inner">
+      <header class="seo-lede">
+        <h2 id="about-heading">A free invoice generator with no signup</h2>
+        <p>QuickInvoice makes a clean, professional PDF invoice in about 60 seconds. There's
+          no account to create, nothing to install, and no email wall. Everything runs in your
+          browser — your client names, rates, and totals never touch a server. Fill in the form,
+          watch the preview update live, and download a print-ready PDF.</p>
+      </header>
+
+      <ol class="seo-steps">
+        <li><span class="seo-step-n">1</span><div><strong>Add your details</strong>Your name or company, your client, and an invoice number. It saves to your browser as you type.</div></li>
+        <li><span class="seo-step-n">2</span><div><strong>List the work</strong>Add line items with quantity and rate. Tax and discount are calculated automatically.</div></li>
+        <li><span class="seo-step-n">3</span><div><strong>Download the PDF</strong>Hit <em>Download PDF</em> and save or print. The invoice is yours — no watermark, no limit.</div></li>
+      </ol>
+
+      <div class="seo-faq">
+        <h2>Frequently asked questions</h2>
+
+        <details class="faq-item">
+          <summary>Is QuickInvoice really free?</summary>
+          <p>Yes. Creating and downloading invoices is completely free, with no limit on how many
+            you make and no watermark on the PDF. There's no paid tier you're nudged toward.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do I need to sign up or create an account?</summary>
+          <p>No signup, no account, no email required. Open the page and start typing. That's the
+            whole point — most invoice tools make you register before you can do anything.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is my invoice data private?</summary>
+          <p>Completely. QuickInvoice runs entirely in your browser. Your details are saved only to
+            your own device's local storage and are never uploaded or sent anywhere. Clear your
+            browser data and they're gone.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I download my invoice as a PDF?</summary>
+          <p>Click <em>Download PDF</em>. Your browser's print dialog opens — choose “Save as PDF”
+            as the destination and save. The invoice prints clean, without the editor around it.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I add my own logo and tax rate?</summary>
+          <p>Yes. Upload a logo (it stays on your device) and set any tax rate or discount
+            percentage. Totals recalculate instantly in the live preview.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does it work on my phone?</summary>
+          <p>Yes. The editor and preview adapt to small screens, and you can download the PDF from
+            mobile browsers that support “Save as PDF” or printing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="seo-foot no-print">
+    <p>QuickInvoice — a free, no-signup invoice generator. Built to be simple.</p>
+  </footer>
+
   <div id="postDownloadToast" class="toast no-print" role="status" hidden>
     <span>Got your invoice? <a id="toastLink" href="#">Tell us what would make this worth paying for →</a></span>
     <button id="toastClose" class="toast-close" type="button" aria-label="Dismiss">×</button>
@@ -167,6 +230,44 @@
       "Saved automatically to your browser",
       "No account required",
       "Works offline"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is QuickInvoice really free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Creating and downloading invoices is completely free, with no limit on how many you make and no watermark on the PDF." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to sign up or create an account?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No signup, no account, and no email required. Open the page and start typing." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my invoice data private?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Completely. QuickInvoice runs entirely in your browser. Your details are saved only to your own device and are never uploaded or sent anywhere." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I download my invoice as a PDF?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Click Download PDF. Your browser's print dialog opens — choose Save as PDF as the destination and save." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add my own logo and tax rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Upload a logo that stays on your device, and set any tax rate or discount percentage. Totals recalculate instantly." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it work on my phone?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The editor and preview adapt to small screens, and you can download the PDF from mobile browsers that support Save as PDF or printing." }
+      }
     ]
   }
   </script>
