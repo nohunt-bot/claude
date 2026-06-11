@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Invoice Template (with a Filled Example) — Edit & Download as PDF</title>
+  <meta name="description" content="A free invoice template you can fill in and download as a PDF — no signup. See a complete worked example, then edit the same layout in the browser. Built for freelancers and small businesses." />
+
+  <meta property="og:title" content="Free Invoice Template — with a Filled Example" />
+  <meta property="og:description" content="See exactly what a finished invoice looks like, then edit the same template in your browser and download a PDF. Free, no signup." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nohunt-bot.github.io/claude/quickinvoice/invoice-template/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Free Invoice Template — with a Filled Example" />
+  <meta name="twitter:description" content="See a finished invoice, then edit the same template in your browser and download a PDF. Free, no signup." />
+
+  <link rel="canonical" href="https://nohunt-bot.github.io/claude/quickinvoice/invoice-template/" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .guide-wrap { max-width: 760px; margin: 0 auto; padding: var(--space); }
+    .guide-crumb { font-size: 0.85rem; color: var(--ink-soft); margin: 1.5rem 0 0; }
+    .guide-crumb a { color: var(--accent); text-decoration: none; }
+    .guide-crumb a:hover { text-decoration: underline; }
+    .guide-article h1 {
+      font-family: var(--serif); font-weight: 600; line-height: 1.1;
+      font-size: clamp(1.9rem, 1.3rem + 2.6vw, 2.9rem);
+      letter-spacing: -0.015em; margin: 0.6rem 0 0.4rem;
+    }
+    .guide-lede { font-size: 1.1rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 2rem; }
+    .guide-article h2 {
+      font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
+      font-size: 1.5rem; margin: 2.6rem 0 0.6rem;
+    }
+    .guide-article p { line-height: 1.7; color: var(--ink); margin: 0 0 1rem; }
+    .guide-article ul, .guide-article ol { line-height: 1.7; color: var(--ink); padding-left: 1.25rem; }
+    .guide-article li { margin-bottom: 0.4rem; }
+    .guide-article strong { font-weight: 650; }
+
+    /* Sample invoice — mirrors the generator's PDF layout */
+    .sample {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+      padding: clamp(1.2rem, 0.6rem + 2.4vw, 2.4rem); margin: 0.5rem 0 1rem;
+      box-shadow: 0 1px 3px color-mix(in oklch, var(--ink) 8%, transparent);
+    }
+    .sample-top { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: flex-start; }
+    .sample-title { font-family: var(--serif); font-size: 2rem; letter-spacing: -0.02em; margin: 0; }
+    .sample-meta { text-align: right; font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; }
+    .sample-meta strong { color: var(--ink); }
+    .sample-parties { display: flex; gap: 2rem; flex-wrap: wrap; margin: 1.6rem 0 1.2rem; }
+    .sample-party { font-size: 0.9rem; line-height: 1.5; }
+    .sample-party .lbl-cap { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-soft); font-weight: 650; display: block; margin-bottom: 0.25rem; }
+    .sample table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 0.5rem; }
+    .sample th { text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); border-bottom: 1.5px solid var(--line); padding: 0.5rem 0.4rem; }
+    .sample th.num, .sample td.num { text-align: right; }
+    .sample td { padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+    .sample-totals { margin-left: auto; width: min(280px, 100%); margin-top: 1rem; font-size: 0.9rem; }
+    .sample-totals div { display: flex; justify-content: space-between; padding: 0.3rem 0.4rem; }
+    .sample-totals .grand { border-top: 1.5px solid var(--ink); font-weight: 700; font-size: 1.05rem; margin-top: 0.3rem; padding-top: 0.5rem; }
+    .sample-pay { margin-top: 1.4rem; font-size: 0.85rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 0.9rem; }
+    .sample-pay strong { color: var(--ink); }
+
+    .guide-cta {
+      display: block; margin: 2.4rem 0; padding: 1.4rem 1.5rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+      text-decoration: none; color: var(--ink);
+      transition: border-color .15s, transform .12s;
+    }
+    .guide-cta:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .guide-cta strong { display: block; font-family: var(--serif); font-size: 1.25rem; margin-bottom: 0.2rem; }
+    .guide-cta span { color: var(--ink-soft); font-size: 0.98rem; }
+    .guide-cta .guide-cta-arrow { color: var(--accent); font-weight: 650; }
+    .guide-foot { margin: 3rem 0 2rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
+    .guide-foot a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../" style="text-decoration:none;color:inherit;">
+      <span class="brand-mark">QI</span>
+      <span class="brand-name">QuickInvoice</span>
+    </a>
+    <nav class="topbar-actions" aria-label="Primary">
+      <a class="btn btn-solid" href="../">Make an invoice</a>
+    </nav>
+  </header>
+
+  <main class="guide-wrap">
+    <p class="guide-crumb"><a href="../">QuickInvoice</a> &rsaquo; Templates &rsaquo; Invoice template</p>
+
+    <article class="guide-article">
+      <h1>A free invoice template — with a worked example</h1>
+      <p class="guide-lede">Below is a complete, filled-in invoice so you can see exactly what every
+        field looks like. When you're ready, open the same layout in your browser, swap in your own
+        details, and download a print-ready PDF — free, no signup.</p>
+
+      <h2>What a finished invoice looks like</h2>
+      <p>This is a typical freelance invoice. Notice the parts that actually get you paid: a clear
+        invoice number, a real due date, plain line items, and payment instructions.</p>
+
+      <div class="sample" aria-label="Example invoice">
+        <div class="sample-top">
+          <h3 class="sample-title">Invoice</h3>
+          <div class="sample-meta">
+            <div><strong>No.</strong> 2026-014</div>
+            <div><strong>Issued</strong> 12 Jun 2026</div>
+            <div><strong>Due</strong> 26 Jun 2026 (Net 14)</div>
+          </div>
+        </div>
+
+        <div class="sample-parties">
+          <div class="sample-party">
+            <span class="lbl-cap">From</span>
+            Alex Rivera<br />Rivera Design Studio<br />alex@riveradesign.co
+          </div>
+          <div class="sample-party">
+            <span class="lbl-cap">Bill to</span>
+            Northwind Coffee Ltd.<br />Attn: Priya Shah, Accounts<br />priya@northwindcoffee.com
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Homepage redesign — wireframes &amp; final UI</td><td class="num">12</td><td class="num">$80.00</td><td class="num">$960.00</td></tr>
+            <tr><td>Logo refresh (2 concepts + revisions)</td><td class="num">1</td><td class="num">$450.00</td><td class="num">$450.00</td></tr>
+            <tr><td>Style guide PDF</td><td class="num">1</td><td class="num">$180.00</td><td class="num">$180.00</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sample-totals">
+          <div><span>Subtotal</span><span>$1,590.00</span></div>
+          <div><span>Tax (8%)</span><span>$127.20</span></div>
+          <div class="grand"><span>Total due</span><span>$1,717.20</span></div>
+        </div>
+
+        <p class="sample-pay"><strong>Payment:</strong> Bank transfer to Rivera Design Studio,
+          sort/acct on request, or PayPal alex@riveradesign.co. Please reference invoice 2026-014.
+          Thank you!</p>
+      </div>
+
+      <a class="guide-cta" href="../">
+        <strong>Edit this template now</strong>
+        <span>Open the generator, replace these details with yours, and download a clean PDF in about
+          60 seconds — free, no signup, runs in your browser.
+        <span class="guide-cta-arrow">Open the editor &rarr;</span></span>
+      </a>
+
+      <h2>How to use this template</h2>
+      <ol>
+        <li><strong>Open the editor.</strong> The <a href="../">QuickInvoice generator</a> loads with the
+          same layout you see above and saves to your browser as you type.</li>
+        <li><strong>Replace the parties.</strong> Put your name and contact under <em>From</em>, and the
+          client plus the person who approves payment under <em>Bill to</em>.</li>
+        <li><strong>Set the number and dates.</strong> Use a sequential number like <code>2026-015</code>
+          and add a real due date — not just "due on receipt".</li>
+        <li><strong>List the work plainly.</strong> One line per item, with quantity and rate. Totals,
+          tax, and discount calculate automatically.</li>
+        <li><strong>Add how to pay you</strong> and download the PDF. Attach it to a short, polite email.</li>
+      </ol>
+
+      <h2>Why this template gets you paid</h2>
+      <ul>
+        <li><strong>The word "Invoice"</strong> up top, so it isn't mistaken for a quote.</li>
+        <li><strong>A unique, sequential number</strong> that keeps both sides' books clean.</li>
+        <li><strong>An explicit due date</strong>, so it doesn't drift to the bottom of the pile.</li>
+        <li><strong>Itemised work</strong> the client can match to what they approved.</li>
+        <li><strong>Clear payment instructions</strong>, so there's no back-and-forth before they can pay.</li>
+      </ul>
+      <p>Want the reasoning behind each of these? Read our guide on
+        <a href="../guide/how-to-invoice-as-a-freelancer/">how to invoice as a freelancer</a> — it
+        covers payment terms, tax, and chasing late payment.</p>
+
+      <p class="guide-foot">Ready to make your own? <a href="../">Edit this invoice template free with QuickInvoice &rarr;</a>
+        — no account, no upload, runs entirely in your browser.</p>
+    </article>
+  </main>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Free Invoice Template — with a Filled Example",
+    "description": "A free, editable invoice template with a complete worked example. Edit it in your browser and download a PDF — no signup.",
+    "author": { "@type": "Organization", "name": "QuickInvoice" },
+    "publisher": { "@type": "Organization", "name": "QuickInvoice" },
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "mainEntityOfPage": "https://nohunt-bot.github.io/claude/quickinvoice/invoice-template/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the QuickInvoice invoice template",
+    "description": "Fill in a free invoice template in your browser and download it as a PDF.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Open the editor", "text": "Open the QuickInvoice generator, which loads with the same template layout." },
+      { "@type": "HowToStep", "position": 2, "name": "Replace the parties", "text": "Add your details under From and the client under Bill to." },
+      { "@type": "HowToStep", "position": 3, "name": "Set the number and dates", "text": "Use a sequential invoice number and add a real due date." },
+      { "@type": "HowToStep", "position": 4, "name": "List the work", "text": "Add one line per item with quantity and rate; totals calculate automatically." },
+      { "@type": "HowToStep", "position": 5, "name": "Add payment details and download", "text": "Add how to pay you and download the print-ready PDF." }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "QuickInvoice", "item": "https://nohunt-bot.github.io/claude/quickinvoice/" },
+      { "@type": "ListItem", "position": 2, "name": "Invoice template", "item": "https://nohunt-bot.github.io/claude/quickinvoice/invoice-template/" }
+    ]
+  }
+  </script>
+</body>
+</html>
