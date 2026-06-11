@@ -219,6 +219,32 @@ function init() {
     renderPreview(state);
   });
 
+  // ---- Feedback / demand capture ----
+  const feedbackMailto =
+    "mailto:nohuntme@gmail.com" +
+    "?subject=" + encodeURIComponent("QuickInvoice feedback") +
+    "&body=" + encodeURIComponent(
+      "What one feature would make QuickInvoice worth paying for to you?\n\n" +
+      "(One line is plenty — thank you for helping shape it.)"
+    );
+  $("feedbackLink").href = feedbackMailto;
+  $("toastLink").href = feedbackMailto;
+
+  // Surface the ask at the highest-intent moment: right after a download.
+  const toast = $("postDownloadToast");
+  const dismissToast = () => { toast.hidden = true; };
+  $("toastClose").addEventListener("click", dismissToast);
+  $("toastLink").addEventListener("click", dismissToast);
+  let feedbackShown = false;
+  window.addEventListener("afterprint", () => {
+    try { if (sessionStorage.getItem("qi.feedbackShown")) feedbackShown = true; } catch {}
+    if (feedbackShown) return;
+    feedbackShown = true;
+    try { sessionStorage.setItem("qi.feedbackShown", "1"); } catch {}
+    toast.hidden = false;
+    setTimeout(dismissToast, 12000);
+  });
+
   $("printBtn").addEventListener("click", () => window.print());
 
   $("shareBtn").addEventListener("click", () => {

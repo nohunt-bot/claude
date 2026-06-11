@@ -156,6 +156,42 @@ textarea.inp { resize: vertical; line-height: 1.45; }
 .sheet-notes { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.85rem; }
 .sheet-notes .pre { color: var(--ink-soft); margin: 0.25rem 0 0; line-height: 1.5; }
 
+/* ---------- Feedback ---------- */
+.feedback {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  background: color-mix(in oklch, var(--accent) 5%, var(--surface));
+}
+.feedback-title { margin: 0 0 0.3rem; font-weight: 650; letter-spacing: -0.01em; }
+.feedback-body { margin: 0 0 0.75rem; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+.feedback .btn-block { display: block; text-align: center; text-decoration: none; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 1.25rem; transform: translateX(-50%);
+  z-index: 20; max-width: min(540px, calc(100vw - 2rem));
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0.75rem 1.1rem;
+  background: var(--ink); color: var(--surface);
+  border-radius: var(--r); box-shadow: 0 8px 30px oklch(0% 0 0 / 0.22);
+  font-size: 0.88rem; line-height: 1.4;
+  animation: toast-in .35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toast[hidden] { display: none; }
+.toast a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+.toast a:hover { opacity: 0.85; }
+.toast-close {
+  flex-shrink: 0; font: inherit; font-size: 1.1rem; line-height: 1; cursor: pointer;
+  width: 28px; height: 28px; border-radius: 7px; border: none;
+  background: oklch(100% 0 0 / 0.12); color: var(--surface);
+}
+.toast-close:hover { background: oklch(100% 0 0 / 0.22); }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+
 /* ---------- Print ---------- */
 @media print {
   .no-print { display: none !important; }

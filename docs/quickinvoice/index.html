@@ -90,6 +90,12 @@
           </label>
         </fieldset>
       </form>
+
+      <aside class="feedback no-print" aria-labelledby="feedback-heading">
+        <p id="feedback-heading" class="feedback-title">QuickInvoice is free and always will be.</p>
+        <p class="feedback-body">What one feature would make it worth paying for — recurring invoices, multi-currency, saved clients, something else?</p>
+        <a id="feedbackLink" class="btn btn-ghost btn-block" href="#">Tell us in 1 line →</a>
+      </aside>
     </section>
 
     <section class="preview-wrap" aria-label="Invoice preview">
@@ -139,6 +145,11 @@
       </article>
     </section>
   </main>
+
+  <div id="postDownloadToast" class="toast no-print" role="status" hidden>
+    <span>Got your invoice? <a id="toastLink" href="#">Tell us what would make this worth paying for →</a></span>
+    <button id="toastClose" class="toast-close" type="button" aria-label="Dismiss">×</button>
+  </div>
 
   <script type="application/ld+json">
   {
