@@ -96,6 +96,46 @@ function bumpNumber(numStr) {
   return s.slice(0, m.index) + next + m[2];
 }
 
+// ---- Recurring invoices (client-side schedule, no backend) ----
+const RECUR_CYCLE = { "": "monthly", monthly: "weekly", weekly: "" };
+
+// All schedule math runs in UTC so stored ISO dates never drift by a day
+// across timezones (parsing local midnight but serializing to UTC would).
+function addPeriod(iso, every) {
+  const d = new Date(iso + "T00:00:00Z");
+  if (Number.isNaN(d.getTime())) return iso;
+  if (every === "weekly") d.setUTCDate(d.getUTCDate() + 7);
+  else d.setUTCMonth(d.getUTCMonth() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+function addDays(iso, n) {
+  const d = new Date(iso + "T00:00:00Z");
+  if (Number.isNaN(d.getTime())) return iso;
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+function dayGap(aIso, bIso) {
+  if (!aIso || !bIso) return null;
+  const a = new Date(aIso + "T00:00:00Z");
+  const b = new Date(bIso + "T00:00:00Z");
+  if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return null;
+  return Math.round((b - a) / 86400000);
+}
+
+// First scheduled date strictly in the future, stepping from `start` by `every`.
+function firstFutureOccurrence(start, every) {
+  let cur = /^\d{4}-\d{2}-\d{2}$/.test(start || "") ? start : today();
+  const t = today();
+  let guard = 0;
+  while (cur <= t && guard < 600) {
+    cur = addPeriod(cur, every);
+    guard++;
+  }
+  return cur;
+}
+
 // ---- Money helpers ----
 function num(v) {
   const n = parseFloat(v);
@@ -380,6 +420,12 @@ function init() {
     applyLogo(dataUrl);
   }
 
+  function recurLabel(recur) {
+    if (recur === "monthly") return "Repeats monthly";
+    if (recur === "weekly") return "Repeats weekly";
+    return "One-off";
+  }
+
   function renderSaved() {
     const list = loadSaved();
     if (!list.length) {
@@ -389,20 +435,33 @@ function init() {
     }
     savedPanel.hidden = false;
     savedList.innerHTML = "";
+    const t = today();
     // Newest first.
     list.slice().reverse().forEach((entry) => {
       const li = document.createElement("li");
-      li.className = "saved-row";
+      li.className = "saved-item";
       if (entry.id === currentSavedId) li.classList.add("is-current");
+      const recur = entry.recur || "";
+      const dueNow = recur && entry.nextDate && entry.nextDate <= t;
       li.innerHTML = `
-        <button class="saved-open" type="button" data-open="${entry.id}">
-          <span class="saved-num"></span>
-          <span class="saved-meta"></span>
-        </button>
-        <span class="saved-actions">
-          <button class="btn btn-ghost btn-xs" type="button" data-dup="${entry.id}">Duplicate</button>
-          <button class="item-del" type="button" data-rm="${entry.id}" aria-label="Delete saved invoice">×</button>
-        </span>`;
+        <div class="saved-row">
+          <button class="saved-open" type="button" data-open="${entry.id}">
+            <span class="saved-num"></span>
+            <span class="saved-meta"></span>
+          </button>
+          <span class="saved-actions">
+            <button class="btn btn-ghost btn-xs" type="button" data-dup="${entry.id}">Duplicate</button>
+            <button class="item-del" type="button" data-rm="${entry.id}" aria-label="Delete saved invoice">×</button>
+          </span>
+        </div>
+        <div class="saved-recur">
+          <button class="recur-toggle" type="button" data-recur="${entry.id}" aria-label="Change recurrence">
+            <span class="recur-dot${recur ? " on" : ""}"></span><span class="recur-text"></span>
+          </button>
+          ${recur ? `
+          <span class="recur-next${dueNow ? " due" : ""}"></span>
+          <button class="btn btn-ghost btn-xs gen-next" type="button" data-gennext="${entry.id}">Generate next →</button>` : ""}
+        </div>`;
       const when = new Date(entry.savedAt).toLocaleDateString(undefined, {
         month: "short",
         day: "numeric",
@@ -410,6 +469,12 @@ function init() {
       li.querySelector(".saved-num").textContent = entry.state.number || "Untitled";
       li.querySelector(".saved-meta").textContent =
         (entry.state.toName || "No client") + " · " + when;
+      li.querySelector(".recur-text").textContent = recurLabel(recur);
+      if (recur) {
+        li.querySelector(".recur-next").textContent = dueNow
+          ? "Due now"
+          : "Next: " + fmtDate(entry.nextDate);
+      }
       savedList.appendChild(li);
     });
   }
@@ -455,6 +520,55 @@ function init() {
   });
 
   savedList.addEventListener("click", (e) => {
+    // Cycle recurrence: one-off → monthly → weekly → one-off.
+    const rec = e.target.closest("[data-recur]");
+    if (rec) {
+      const id = rec.dataset.recur;
+      const next = loadSaved().map((entry) => {
+        if (entry.id !== id) return entry;
+        const every = RECUR_CYCLE[entry.recur || ""];
+        const nextDate = every
+          ? firstFutureOccurrence(entry.state.issued, every)
+          : "";
+        return { ...entry, recur: every, nextDate };
+      });
+      persistSaved(next);
+      renderSaved();
+      return;
+    }
+    // Spin up the next invoice in the series as a fresh, unsaved draft.
+    const gen = e.target.closest("[data-gennext]");
+    if (gen) {
+      const id = gen.dataset.gennext;
+      const list = loadSaved();
+      const entry = list.find((x) => x.id === id);
+      if (!entry || !entry.recur) return;
+      const nd = entry.nextDate || firstFutureOccurrence(entry.state.issued, entry.recur);
+      const gap = dayGap(entry.state.issued, entry.state.due);
+      const newDue = gap != null ? addDays(nd, gap) : entry.state.due;
+      const newNumber = bumpNumber(entry.state.number);
+      state = {
+        ...JSON.parse(JSON.stringify(entry.state)),
+        number: newNumber,
+        issued: nd,
+        due: newDue,
+      };
+      currentSavedId = null; // a generated invoice is a fresh, unsaved draft
+      applyAndSaveLogo(entry.logo || "");
+      saveState(state);
+      syncTopFields(state);
+      renderItemsEditor(state);
+      renderPreview(state);
+      // March the template forward so the next generation continues the series.
+      const advanced = list.map((x) =>
+        x.id === id
+          ? { ...x, nextDate: addPeriod(nd, entry.recur), state: { ...x.state, number: newNumber, issued: nd, due: newDue } }
+          : x
+      );
+      persistSaved(advanced);
+      renderSaved();
+      return;
+    }
     const dup = e.target.closest("[data-dup]");
     if (dup) {
       const entry = loadSaved().find((x) => x.id === dup.dataset.dup);
