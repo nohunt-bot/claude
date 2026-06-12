@@ -427,31 +427,53 @@ function init() {
     return "One-off";
   }
 
-  // Outstanding (unpaid) total — turns the saved list into a mini receivables view.
-  // Sums per currency; if unpaid invoices mix currencies, falls back to a count
-  // so we never add unlike symbols into a meaningless figure.
+  // Sum a set of saved entries into a "<amount> <singleSuffix>" line. When they
+  // mix currencies we can't add unlike symbols, so fall back to a plain count:
+  // "<n> <noun> <mixedSuffix>".
+  function summaryLine(entries, singleSuffix, noun, mixedSuffix) {
+    const line = document.createElement("div");
+    line.className = "summary-line";
+    const currencies = new Set(
+      entries.map((e) => (e.state.currency || "$").trim() || "$")
+    );
+    if (currencies.size === 1) {
+      const total = entries.reduce((sum, e) => sum + computeTotals(e.state).total, 0);
+      const strong = document.createElement("strong");
+      strong.textContent = fmt(entries[0].state, total);
+      line.append(strong, ` ${singleSuffix}`);
+    } else {
+      const word = entries.length === 1 ? noun : noun + "s";
+      line.textContent = `${entries.length} ${word} ${mixedSuffix}`.trim();
+    }
+    return line;
+  }
+
+  // Mini receivables view: outstanding (unpaid) total on top, and — when any
+  // invoice was marked paid this calendar month — a "collected this month" line.
   function renderSummary(list) {
+    savedSummary.hidden = false;
+    savedSummary.classList.remove("all-paid");
+    savedSummary.innerHTML = "";
+
     const unpaid = list.filter((e) => !e.paid);
     if (!unpaid.length) {
-      savedSummary.hidden = false;
-      savedSummary.classList.add("all-paid");
-      savedSummary.textContent = "All caught up — every saved invoice is marked paid.";
-      return;
-    }
-    savedSummary.classList.remove("all-paid");
-    const currencies = new Set(
-      unpaid.map((e) => (e.state.currency || "$").trim() || "$")
-    );
-    const noun = unpaid.length === 1 ? "invoice" : "invoices";
-    savedSummary.hidden = false;
-    if (currencies.size === 1) {
-      const total = unpaid.reduce((sum, e) => sum + computeTotals(e.state).total, 0);
-      savedSummary.innerHTML = "";
-      const strong = document.createElement("strong");
-      strong.textContent = fmt(unpaid[0].state, total);
-      savedSummary.append(strong, ` outstanding across ${unpaid.length} ${noun}`);
+      const line = document.createElement("div");
+      line.className = "summary-line all-paid";
+      line.textContent = "All caught up — every saved invoice is marked paid.";
+      savedSummary.appendChild(line);
     } else {
-      savedSummary.textContent = `${unpaid.length} unpaid ${noun}`;
+      const noun = unpaid.length === 1 ? "invoice" : "invoices";
+      savedSummary.appendChild(
+        summaryLine(unpaid, `outstanding across ${unpaid.length} ${noun}`, "unpaid invoice", "")
+      );
+    }
+
+    const month = today().slice(0, 7); // YYYY-MM
+    const collected = list.filter((e) => e.paid && (e.paidAt || "").slice(0, 7) === month);
+    if (collected.length) {
+      const line = summaryLine(collected, "collected this month", "invoice", "collected this month");
+      line.classList.add("summary-collected");
+      savedSummary.appendChild(line);
     }
   }
 
@@ -476,6 +498,10 @@ function init() {
       if (paid) li.classList.add("is-paid");
       const recur = entry.recur || "";
       const dueNow = recur && entry.nextDate && entry.nextDate <= t;
+      const paidOn = paid && entry.paidAt
+        ? new Date(entry.paidAt + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })
+        : "";
+      const paidText = paid ? (paidOn ? "Paid " + paidOn : "Paid") : "Mark paid";
       li.innerHTML = `
         <div class="saved-row">
           <button class="saved-open" type="button" data-open="${entry.id}">
@@ -489,7 +515,7 @@ function init() {
         </div>
         <div class="saved-recur">
           <button class="paid-toggle${paid ? " is-paid" : ""}" type="button" data-paid="${entry.id}" aria-pressed="${paid}">
-            <span class="paid-check"></span><span class="paid-text">${paid ? "Paid" : "Mark paid"}</span>
+            <span class="paid-check"></span><span class="paid-text">${paidText}</span>
           </button>
           <button class="recur-toggle" type="button" data-recur="${entry.id}" aria-label="Change recurrence">
             <span class="recur-dot${recur ? " on" : ""}"></span><span class="recur-text"></span>
@@ -561,7 +587,9 @@ function init() {
     if (pd) {
       const id = pd.dataset.paid;
       const next = loadSaved().map((entry) =>
-        entry.id === id ? { ...entry, paid: !entry.paid } : entry
+        entry.id === id
+          ? { ...entry, paid: !entry.paid, paidAt: !entry.paid ? today() : "" }
+          : entry
       );
       persistSaved(next);
       renderSaved();
