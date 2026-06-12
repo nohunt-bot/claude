@@ -207,6 +207,44 @@ textarea.inp { resize: vertical; line-height: 1.45; }
 }
 .gen-next { margin-left: auto; }
 
+/* Paid / unpaid status on a saved invoice */
+.paid-toggle {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font: inherit; font-size: 0.76rem; color: var(--ink-soft); cursor: pointer;
+  background: transparent; border: none; padding: 0.15rem 0;
+}
+.paid-toggle:hover { color: var(--ink); }
+.paid-check {
+  width: 0.85rem; height: 0.85rem; border-radius: 999px; flex-shrink: 0;
+  border: 1.5px solid var(--line); background: var(--surface);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.paid-toggle.is-paid { color: var(--paid, oklch(58% 0.13 155)); font-weight: 650; }
+.paid-toggle.is-paid .paid-check {
+  border-color: var(--paid, oklch(58% 0.13 155));
+  background: var(--paid, oklch(58% 0.13 155));
+}
+.paid-toggle.is-paid .paid-check::after {
+  content: ""; width: 0.18rem; height: 0.36rem;
+  border: solid var(--surface); border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-0.04rem) rotate(45deg);
+}
+.saved-item.is-paid .saved-num { color: var(--ink-soft); }
+.saved-paid-pill {
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 700; color: var(--paid, oklch(58% 0.13 155));
+  border: 1px solid color-mix(in oklch, var(--paid, oklch(58% 0.13 155)) 40%, var(--surface));
+  background: color-mix(in oklch, var(--paid, oklch(58% 0.13 155)) 10%, var(--surface));
+  border-radius: 999px; padding: 0.05rem 0.4rem; margin-left: 0.45rem;
+}
+.saved-summary {
+  margin: 0 0 0.7rem; font-size: 0.82rem; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.saved-summary[hidden] { display: none; }
+.saved-summary strong { font-weight: 700; }
+.saved-summary.all-paid { color: var(--paid, oklch(58% 0.13 155)); }
+
 /* ---------- Saved clients ---------- */
 .client-bar { margin-top: 0.6rem; }
 .client-bar[hidden] { display: none; }

@@ -407,6 +407,7 @@ function init() {
 
   // ---- Saved invoices ----
   const savedPanel = $("savedPanel");
+  const savedSummary = $("savedSummary");
   const savedList = $("savedList");
   const saveBtn = $("saveBtn");
 
@@ -426,27 +427,59 @@ function init() {
     return "One-off";
   }
 
+  // Outstanding (unpaid) total — turns the saved list into a mini receivables view.
+  // Sums per currency; if unpaid invoices mix currencies, falls back to a count
+  // so we never add unlike symbols into a meaningless figure.
+  function renderSummary(list) {
+    const unpaid = list.filter((e) => !e.paid);
+    if (!unpaid.length) {
+      savedSummary.hidden = false;
+      savedSummary.classList.add("all-paid");
+      savedSummary.textContent = "All caught up — every saved invoice is marked paid.";
+      return;
+    }
+    savedSummary.classList.remove("all-paid");
+    const currencies = new Set(
+      unpaid.map((e) => (e.state.currency || "$").trim() || "$")
+    );
+    const noun = unpaid.length === 1 ? "invoice" : "invoices";
+    savedSummary.hidden = false;
+    if (currencies.size === 1) {
+      const total = unpaid.reduce((sum, e) => sum + computeTotals(e.state).total, 0);
+      savedSummary.innerHTML = "";
+      const strong = document.createElement("strong");
+      strong.textContent = fmt(unpaid[0].state, total);
+      savedSummary.append(strong, ` outstanding across ${unpaid.length} ${noun}`);
+    } else {
+      savedSummary.textContent = `${unpaid.length} unpaid ${noun}`;
+    }
+  }
+
   function renderSaved() {
     const list = loadSaved();
     if (!list.length) {
       savedPanel.hidden = true;
+      savedSummary.hidden = true;
       savedList.innerHTML = "";
       return;
     }
     savedPanel.hidden = false;
     savedList.innerHTML = "";
+    renderSummary(list);
     const t = today();
     // Newest first.
     list.slice().reverse().forEach((entry) => {
       const li = document.createElement("li");
       li.className = "saved-item";
       if (entry.id === currentSavedId) li.classList.add("is-current");
+      const paid = !!entry.paid;
+      if (paid) li.classList.add("is-paid");
       const recur = entry.recur || "";
       const dueNow = recur && entry.nextDate && entry.nextDate <= t;
       li.innerHTML = `
         <div class="saved-row">
           <button class="saved-open" type="button" data-open="${entry.id}">
-            <span class="saved-num"></span>
+            <span class="saved-num"></span>${paid ? `<span class="saved-paid-pill">Paid</span>` : ""}
             <span class="saved-meta"></span>
           </button>
           <span class="saved-actions">
@@ -455,6 +488,9 @@ function init() {
           </span>
         </div>
         <div class="saved-recur">
+          <button class="paid-toggle${paid ? " is-paid" : ""}" type="button" data-paid="${entry.id}" aria-pressed="${paid}">
+            <span class="paid-check"></span><span class="paid-text">${paid ? "Paid" : "Mark paid"}</span>
+          </button>
           <button class="recur-toggle" type="button" data-recur="${entry.id}" aria-label="Change recurrence">
             <span class="recur-dot${recur ? " on" : ""}"></span><span class="recur-text"></span>
           </button>
@@ -520,6 +556,17 @@ function init() {
   });
 
   savedList.addEventListener("click", (e) => {
+    // Toggle paid / unpaid status.
+    const pd = e.target.closest("[data-paid]");
+    if (pd) {
+      const id = pd.dataset.paid;
+      const next = loadSaved().map((entry) =>
+        entry.id === id ? { ...entry, paid: !entry.paid } : entry
+      );
+      persistSaved(next);
+      renderSaved();
+      return;
+    }
     // Cycle recurrence: one-off → monthly → weekly → one-off.
     const rec = e.target.closest("[data-recur]");
     if (rec) {
