@@ -6,6 +6,7 @@
 const STORAGE_KEY = "quickinvoice.v1";
 const LOGO_KEY = "quickinvoice.logo";
 const SAVED_KEY = "quickinvoice.saved.v1";
+const CLIENTS_KEY = "quickinvoice.clients.v1";
 
 const defaultState = () => ({
   fromName: "",
@@ -63,6 +64,24 @@ function loadSaved() {
 function persistSaved(list) {
   try {
     localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+  } catch {
+    /* storage full or blocked */
+  }
+}
+
+// ---- Saved clients (remembered Bill-To parties, refillable in one click) ----
+function loadClients() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(CLIENTS_KEY) || "[]");
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function persistClients(list) {
+  try {
+    localStorage.setItem(CLIENTS_KEY, JSON.stringify(list));
   } catch {
     /* storage full or blocked */
   }
@@ -457,9 +476,76 @@ function init() {
     }
   });
 
+  // ---- Saved clients ----
+  const clientBar = $("clientBar");
+  const clientChips = $("clientChips");
+  const saveClientBtn = $("saveClientBtn");
+
+  function renderClients() {
+    const list = loadClients();
+    if (!list.length) {
+      clientBar.hidden = true;
+      clientChips.innerHTML = "";
+      return;
+    }
+    clientBar.hidden = false;
+    clientChips.innerHTML = "";
+    list.forEach((c, i) => {
+      const chip = document.createElement("span");
+      chip.className = "client-chip";
+      chip.innerHTML = `
+        <button class="client-fill" type="button" data-fill="${i}"></button>
+        <button class="client-rm" type="button" data-rmclient="${i}" aria-label="Forget client">×</button>`;
+      chip.querySelector(".client-fill").textContent = c.name;
+      clientChips.appendChild(chip);
+    });
+  }
+
+  saveClientBtn.addEventListener("click", () => {
+    const name = (state.toName || "").trim();
+    if (!name) {
+      saveClientBtn.textContent = "Add a client name first";
+      setTimeout(() => { saveClientBtn.textContent = "+ Remember this client"; }, 1600);
+      return;
+    }
+    const list = loadClients();
+    const details = state.toDetails || "";
+    const idx = list.findIndex((c) => c.name.toLowerCase() === name.toLowerCase());
+    let next;
+    if (idx >= 0) {
+      next = list.map((c, i) => (i === idx ? { name, details } : c));
+    } else {
+      next = [...list, { name, details }];
+    }
+    persistClients(next);
+    renderClients();
+    saveClientBtn.textContent = "Saved ✓";
+    setTimeout(() => { saveClientBtn.textContent = "+ Remember this client"; }, 1600);
+  });
+
+  clientChips.addEventListener("click", (e) => {
+    const rm = e.target.closest("[data-rmclient]");
+    if (rm) {
+      const i = Number(rm.dataset.rmclient);
+      persistClients(loadClients().filter((_, idx) => idx !== i));
+      renderClients();
+      return;
+    }
+    const fill = e.target.closest("[data-fill]");
+    if (fill) {
+      const c = loadClients()[Number(fill.dataset.fill)];
+      if (!c) return;
+      state = { ...state, toName: c.name, toDetails: c.details || "" };
+      saveState(state);
+      syncTopFields(state);
+      renderPreview(state);
+    }
+  });
+
   renderItemsEditor(state);
   renderPreview(state);
   renderSaved();
+  renderClients();
 }
 
 function syncTopFields(state) {

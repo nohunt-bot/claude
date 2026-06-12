@@ -56,6 +56,11 @@
           <legend>Bill to</legend>
           <input class="inp" data-bind="toName" placeholder="Client name or company" />
           <textarea class="inp" data-bind="toDetails" rows="3" placeholder="Address, email"></textarea>
+          <div id="clientBar" class="client-bar" hidden>
+            <span class="client-bar-label">Saved clients — tap to fill</span>
+            <div id="clientChips" class="client-chips"></div>
+          </div>
+          <button id="saveClientBtn" class="btn btn-ghost btn-xs" type="button">+ Remember this client</button>
         </fieldset>
 
         <fieldset class="field-group grid-2">
