@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Much Should I Charge as a Freelancer? (Rate Formula + Examples, 2026)</title>
+  <meta name="description" content="A simple formula to set your freelance rate from the income you actually need — plus how to choose between hourly and project pricing, and how to raise your rates without losing clients." />
+
+  <meta property="og:title" content="How Much Should I Charge as a Freelancer? (Rate Formula + Examples)" />
+  <meta property="og:description" content="Work out your freelance hourly and project rates from the income you need — with a clear formula, worked examples, and a billable-hours reality check. Free, no-signup invoice generator included." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nohunt-bot.github.io/claude/quickinvoice/guide/how-much-to-charge-as-a-freelancer/" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How Much Should I Charge as a Freelancer?" />
+  <meta name="twitter:description" content="A simple formula to set your freelance rate from the income you need, plus hourly vs project pricing and how to raise rates." />
+
+  <link rel="canonical" href="https://nohunt-bot.github.io/claude/quickinvoice/guide/how-much-to-charge-as-a-freelancer/" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <style>
+    .guide-wrap { max-width: 720px; margin: 0 auto; padding: var(--space); }
+    .guide-crumb { font-size: 0.85rem; color: var(--ink-soft); margin: 1.5rem 0 0; }
+    .guide-crumb a { color: var(--accent); text-decoration: none; }
+    .guide-crumb a:hover { text-decoration: underline; }
+    .guide-article h1 {
+      font-family: var(--serif); font-weight: 600; line-height: 1.1;
+      font-size: clamp(1.9rem, 1.3rem + 2.6vw, 2.9rem);
+      letter-spacing: -0.015em; margin: 0.6rem 0 0.4rem;
+    }
+    .guide-lede { font-size: 1.1rem; line-height: 1.6; color: var(--ink-soft); margin: 0 0 2.2rem; }
+    .guide-article h2 {
+      font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
+      font-size: 1.5rem; margin: 2.6rem 0 0.6rem;
+    }
+    .guide-article h3 { font-size: 1.08rem; margin: 1.6rem 0 0.3rem; letter-spacing: -0.01em; }
+    .guide-article p { line-height: 1.7; color: var(--ink); margin: 0 0 1rem; }
+    .guide-article ul, .guide-article ol { line-height: 1.7; color: var(--ink); padding-left: 1.25rem; }
+    .guide-article li { margin-bottom: 0.4rem; }
+    .guide-article strong { font-weight: 650; }
+    .terms-table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0 1.4rem; font-size: 0.96rem;
+    }
+    .terms-table th, .terms-table td {
+      text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top;
+    }
+    .terms-table th { font-family: var(--serif); font-weight: 600; color: var(--ink); }
+    .terms-table td { color: var(--ink); }
+    .terms-table tr:last-child td { border-bottom: none; }
+    .rate-formula {
+      margin: 1rem 0 1.4rem; padding: 1.2rem 1.35rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+      font-size: 1rem; line-height: 1.7; color: var(--ink);
+    }
+    .rate-formula .rate-eq { font-family: var(--serif); font-size: 1.12rem; font-weight: 600; margin: 0 0 0.6rem; letter-spacing: -0.01em; }
+    .rate-formula p:last-child { margin-bottom: 0; }
+    .guide-cta {
+      display: block; margin: 2.6rem 0; padding: 1.4rem 1.5rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+      text-decoration: none; color: var(--ink);
+      transition: border-color .15s, transform .12s;
+    }
+    .guide-cta:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .guide-cta strong { display: block; font-family: var(--serif); font-size: 1.25rem; margin-bottom: 0.2rem; }
+    .guide-cta span { color: var(--ink-soft); font-size: 0.98rem; }
+    .guide-cta .guide-cta-arrow { color: var(--accent); font-weight: 650; }
+    .guide-foot { margin: 3rem 0 2rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink-soft); }
+    .guide-foot a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../" style="text-decoration:none;color:inherit;">
+      <span class="brand-mark">QI</span>
+      <span class="brand-name">QuickInvoice</span>
+    </a>
+    <nav class="topbar-actions" aria-label="Primary">
+      <a class="btn btn-solid" href="../../">Make an invoice</a>
+    </nav>
+  </header>
+
+  <main class="guide-wrap">
+    <p class="guide-crumb"><a href="../../">QuickInvoice</a> &rsaquo; Guides &rsaquo; How much to charge as a freelancer</p>
+
+    <article class="guide-article">
+      <h1>How much should I charge as a freelancer?</h1>
+      <p class="guide-lede">Most freelancers guess their rate by glancing at what others charge — then quietly
+        resent it for a year. There's a better way: work backwards from the income you actually need. Below is
+        a simple formula, two worked examples, and the billable-hours reality check that stops you from
+        accidentally underpricing yourself.</p>
+
+      <h2>Start with the income you need, not the market</h2>
+      <p>Your rate isn't a number you copy from a forum — it's the number that covers your salary, your costs,
+        and the hours you <em>can't</em> bill. Add those up first, then translate them into an hourly rate.</p>
+      <div class="rate-formula">
+        <p class="rate-eq">Hourly rate = (Target income + Business costs) &divide; Billable hours per year</p>
+        <p><strong>Target income</strong> — the salary you want to take home, before tax.<br>
+        <strong>Business costs</strong> — software, equipment, insurance, subscriptions, accounting.<br>
+        <strong>Billable hours</strong> — the hours you can actually invoice, not the hours you work.</p>
+      </div>
+
+      <h2>The billable-hours reality check</h2>
+      <p>This is the step that trips people up. A full-time job is roughly 2,080 hours a year, but you can't
+        bill all of them. Admin, marketing, invoicing, sick days, holidays, and gaps between projects all eat
+        into billable time. A realistic figure for most solo freelancers is <strong>1,000–1,200 billable hours
+        a year</strong> — barely half of "full time."</p>
+      <table class="terms-table">
+        <thead>
+          <tr><th>Hours in a work year</th><th>~2,080</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Minus holiday, sick &amp; admin (~25%)</td><td>~1,560</td></tr>
+          <tr><td>Minus marketing, sales &amp; unbilled gaps (~25%)</td><td>~1,170</td></tr>
+          <tr><td><strong>Realistic billable hours</strong></td><td><strong>~1,100</strong></td></tr>
+        </tbody>
+      </table>
+      <p>If you set your rate against 2,080 hours, you'll come up short on roughly half your income. Always
+        divide by your <em>billable</em> hours.</p>
+
+      <h2>Worked example: a $70k target</h2>
+      <p>Say you want to take home <strong>$70,000</strong> and your business costs run about <strong>$8,000</strong>
+        a year. Using ~1,100 billable hours:</p>
+      <div class="rate-formula">
+        <p class="rate-eq">($70,000 + $8,000) &divide; 1,100 = ~$71/hour</p>
+        <p>Round it up to a clean <strong>$75/hour</strong> to leave margin for slow months. That $75 is your
+          floor, not your ceiling — specialised or in-demand work can go well above it.</p>
+      </div>
+      <p>Notice how far this sits above the "$70,000 &divide; 2,080 = $34/hour" you'd get from the naive
+        calculation. The gap is exactly why so many freelancers feel underpaid.</p>
+
+      <a class="guide-cta" href="../../">
+        <strong>Set your rate, then send the invoice</strong>
+        <span>Once you've settled on a number, QuickInvoice turns it into a clean, professional invoice in seconds — your rate, hours, and totals calculated for you. Free, no signup, runs in your browser.
+        <span class="guide-cta-arrow">Open the generator &rarr;</span></span>
+      </a>
+
+      <h2>Hourly vs project pricing</h2>
+      <p>Once you know your hourly floor, decide how to <em>present</em> it. Most freelancers use both depending
+        on the job.</p>
+      <table class="terms-table">
+        <thead>
+          <tr><th>Approach</th><th>Best for</th><th>Watch out for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Hourly</strong></td><td>Open-ended work, retainers, anything where scope shifts</td><td>Caps your income at the clock; clients police your hours</td></tr>
+          <tr><td><strong>Per project (fixed)</strong></td><td>Well-defined deliverables you can scope</td><td>Scope creep eats your margin — define what's included</td></tr>
+          <tr><td><strong>Day rate</strong></td><td>Consulting, on-site work, full-day blocks</td><td>Half-days still cost you a full day's opportunity</td></tr>
+        </tbody>
+      </table>
+      <p>To quote a fixed-price project, estimate the hours honestly, multiply by your hourly rate, then add a
+        buffer of 15–20% for revisions and the inevitable surprises. As you get faster, project pricing rewards
+        your efficiency in a way hourly billing never will.</p>
+
+      <h2>How to raise your rates without losing clients</h2>
+      <ul>
+        <li><strong>Raise on new clients first.</strong> Quote your new, higher rate to every new lead. The
+          market tells you quickly whether it sticks — and it usually does.</li>
+        <li><strong>Give existing clients notice.</strong> A short, friendly email 30–60 days ahead ("from
+          [date], my rate will be [new rate]") is professional and rarely contested for good work.</li>
+        <li><strong>Tie increases to value, not time.</strong> Anchor the conversation on results you've
+          delivered, not on the fact that a year has passed.</li>
+        <li><strong>Expect to lose your cheapest clients — that's the point.</strong> Raising rates filters out
+          low-margin work and frees up hours for better-paying projects.</li>
+      </ul>
+
+      <h2>Don't forget tax and the "self-employment" premium</h2>
+      <p>Your rate is pre-tax. As a freelancer you also cover the costs an employer would normally absorb —
+        self-employment tax, your own benefits, retirement, and time off. That's why freelance rates look high
+        next to an equivalent salary: a chunk of every invoice is funding things a paycheck would have hidden.
+        Set money aside for tax from each payment so a clean-looking rate doesn't become a nasty April surprise.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do I calculate my freelance hourly rate?</h3>
+      <p>Add the annual income you want to take home to your yearly business costs, then divide by your
+        realistic billable hours — usually around 1,100 for a solo freelancer, not the full 2,080 in a work
+        year. For example, ($70,000 + $8,000) &divide; 1,100 works out to about $71/hour, which you'd round up
+        to leave margin.</p>
+      <h3>Should I charge hourly or per project?</h3>
+      <p>Charge hourly for open-ended or shifting work, and a fixed project price for well-defined deliverables
+        you can scope confidently. Project pricing rewards you for working efficiently, but only if you define
+        what's included to protect against scope creep. Many freelancers use both depending on the job.</p>
+      <h3>How much should a beginner freelancer charge?</h3>
+      <p>Beginners often undercharge out of fear, but the income-based formula still applies — work out the rate
+        that covers your costs and target income, then perhaps shave a little while you build a portfolio.
+        Resist going far below your floor; it's far easier to start at a fair rate than to claw back from a
+        cheap one.</p>
+      <h3>How often should I raise my freelance rates?</h3>
+      <p>Review your rates at least once a year, and raise them on new clients immediately. For existing
+        clients, give 30–60 days' notice and anchor the increase to the value you deliver. Expect to lose your
+        lowest-paying clients — that's a feature, not a bug.</p>
+
+      <p class="guide-foot">Settled on your rate? <a href="../../">Make a free invoice with QuickInvoice &rarr;</a>
+        — no account, no upload, runs entirely in your browser. New to billing? Read
+        <a href="../how-to-invoice-as-a-freelancer/">how to invoice as a freelancer</a> or start from a
+        <a href="../../invoice-template/">free invoice template</a>.</p>
+    </article>
+  </main>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How Much Should I Charge as a Freelancer? (Rate Formula + Examples)",
+    "description": "A simple income-based formula to set your freelance hourly and project rates, with worked examples, a billable-hours reality check, and how to raise your rates without losing clients.",
+    "author": { "@type": "Organization", "name": "QuickInvoice" },
+    "publisher": { "@type": "Organization", "name": "QuickInvoice" },
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "mainEntityOfPage": "https://nohunt-bot.github.io/claude/quickinvoice/guide/how-much-to-charge-as-a-freelancer/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I calculate my freelance hourly rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Add the annual income you want to take home to your yearly business costs, then divide by your realistic billable hours — usually around 1,100 for a solo freelancer, not the full 2,080 in a work year. For example, ($70,000 + $8,000) divided by 1,100 works out to about $71/hour, which you would round up to leave margin." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I charge hourly or per project?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Charge hourly for open-ended or shifting work, and a fixed project price for well-defined deliverables you can scope confidently. Project pricing rewards efficiency, but only if you define what's included to protect against scope creep. Many freelancers use both depending on the job." }
+      },
+      {
+        "@type": "Question",
+        "name": "How much should a beginner freelancer charge?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Beginners often undercharge out of fear, but the income-based formula still applies — work out the rate that covers your costs and target income, then perhaps shave a little while you build a portfolio. Resist going far below your floor; it is far easier to start at a fair rate than to claw back from a cheap one." }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I raise my freelance rates?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Review your rates at least once a year, and raise them on new clients immediately. For existing clients, give 30–60 days' notice and anchor the increase to the value you deliver. Expect to lose your lowest-paying clients — that's a feature, not a bug." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "QuickInvoice", "item": "https://nohunt-bot.github.io/claude/quickinvoice/" },
+      { "@type": "ListItem", "position": 2, "name": "How much to charge as a freelancer", "item": "https://nohunt-bot.github.io/claude/quickinvoice/guide/how-much-to-charge-as-a-freelancer/" }
+    ]
+  }
+  </script>
+</body>
+</html>
