@@ -223,6 +223,59 @@ function fmt(state, amount) {
   })}`;
 }
 
+// ---- Amount in words (the classic invoice/check line: "One thousand and 00/100") ----
+const ONES = [
+  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+  "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+  "seventeen", "eighteen", "nineteen",
+];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const SCALES = ["", "thousand", "million", "billion"];
+
+// Integer 0..999 → words (compound numbers hyphenated, e.g. "twenty-one").
+function threeToWords(n) {
+  const parts = [];
+  if (n >= 100) {
+    parts.push(ONES[Math.floor(n / 100)], "hundred");
+    n %= 100;
+  }
+  if (n >= 20) {
+    let t = TENS[Math.floor(n / 10)];
+    n %= 10;
+    if (n) t += "-" + ONES[n];
+    parts.push(t);
+  } else if (n > 0) {
+    parts.push(ONES[n]);
+  }
+  return parts.join(" ");
+}
+
+// Whole number → words, first letter capitalized. Handles up to billions.
+function intToWords(n) {
+  if (n === 0) return "Zero";
+  const groups = [];
+  while (n > 0) {
+    groups.push(n % 1000);
+    n = Math.floor(n / 1000);
+  }
+  const words = [];
+  for (let i = groups.length - 1; i >= 0; i--) {
+    if (groups[i] === 0) continue;
+    words.push(threeToWords(groups[i]));
+    if (SCALES[i]) words.push(SCALES[i]);
+  }
+  const s = words.join(" ");
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// Full amount line: "One thousand two hundred thirty-four and 56/100".
+function amountInWords(amount) {
+  const safe = Math.max(0, Math.round(amount * 100) / 100);
+  const whole = Math.floor(safe);
+  const cents = Math.round((safe - whole) * 100);
+  return `${intToWords(whole)} and ${String(cents).padStart(2, "0")}/100`;
+}
+
 function fmtDate(iso) {
   if (!iso) return "—";
   const d = new Date(iso + "T00:00:00");
@@ -292,6 +345,14 @@ function renderPreview(state) {
   }
 
   setText("pTotal", fmt(state, t.total));
+
+  const wordsEl = $("pAmountWords");
+  if (t.total > 0) {
+    wordsEl.hidden = false;
+    setText("pAmountWords", "Amount in words: " + amountInWords(t.total));
+  } else {
+    wordsEl.hidden = true;
+  }
 
   const notesWrap = $("pNotesWrap");
   if (state.notes && state.notes.trim()) {
