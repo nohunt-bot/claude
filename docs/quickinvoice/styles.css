@@ -247,6 +247,7 @@ textarea.inp { resize: vertical; line-height: 1.45; }
 .saved-summary .all-paid { color: var(--paid, oklch(58% 0.13 155)); }
 .summary-collected { color: var(--ink-soft); }
 .summary-collected strong { color: var(--paid, oklch(58% 0.13 155)); }
+.saved-export { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.85rem; }
 
 /* ---------- Saved clients ---------- */
 .client-bar { margin-top: 0.6rem; }

@@ -96,6 +96,64 @@ function bumpNumber(numStr) {
   return s.slice(0, m.index) + next + m[2];
 }
 
+// ---- Receivables export (the saved list as spreadsheet rows) ----
+// Pure: a 2-D array (header + one row per saved invoice) the user can take
+// elsewhere. Amount is the raw computed total (no symbol) so it stays numeric
+// in a spreadsheet; the currency symbol rides in its own column.
+function receivablesRows(list) {
+  const header = [
+    "Invoice #", "Client", "Issued", "Due",
+    "Amount", "Currency", "Status", "Paid date",
+  ];
+  const rows = list.map((e) => [
+    e.state.number || "",
+    e.state.toName || "",
+    e.state.issued || "",
+    e.state.due || "",
+    computeTotals(e.state).total.toFixed(2),
+    (e.state.currency || "$").trim() || "$",
+    e.paid ? "Paid" : "Unpaid",
+    e.paid ? (e.paidAt || "") : "",
+  ]);
+  return [header, ...rows];
+}
+
+// RFC-4180-ish CSV: quote any field with a comma, quote or newline; CRLF rows.
+function toCsv(rows) {
+  const esc = (v) => {
+    const s = String(v);
+    return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  return rows.map((r) => r.map(esc).join(",")).join("\r\n");
+}
+
+// Tab-separated — pastes straight into a spreadsheet cell grid. Strip any tab
+// or newline inside a field so the grid can't be knocked out of alignment.
+function toTsv(rows) {
+  return rows
+    .map((r) => r.map((v) => String(v).replace(/[\t\r\n]+/g, " ")).join("\t"))
+    .join("\n");
+}
+
+// Trigger a client-side file download of CSV text (no server round-trip).
+function downloadText(filename, text, mime) {
+  const blob = new Blob([text], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Briefly swap a button's label to confirm an action, then restore it.
+function flashButton(btn, msg, restore) {
+  btn.textContent = msg;
+  setTimeout(() => { btn.textContent = restore; }, 1600);
+}
+
 // ---- Recurring invoices (client-side schedule, no backend) ----
 const RECUR_CYCLE = { "": "monthly", monthly: "weekly", weekly: "" };
 
@@ -410,6 +468,22 @@ function init() {
   const savedSummary = $("savedSummary");
   const savedList = $("savedList");
   const saveBtn = $("saveBtn");
+
+  // Export the receivables view so users can take their "who owes me / who
+  // paid me" data elsewhere — a clean free-tier capstone.
+  $("exportCsvBtn").addEventListener("click", () => {
+    const rows = receivablesRows(loadSaved());
+    downloadText("quickinvoice-receivables.csv", toCsv(rows), "text/csv;charset=utf-8");
+    flashButton($("exportCsvBtn"), "Downloaded ✓", "Export CSV");
+  });
+  $("copyCsvBtn").addEventListener("click", () => {
+    const tsv = toTsv(receivablesRows(loadSaved()));
+    const btn = $("copyCsvBtn");
+    navigator.clipboard.writeText(tsv).then(
+      () => flashButton(btn, "Copied ✓", "Copy for spreadsheet"),
+      () => flashButton(btn, "Press ⌘C / Ctrl-C", "Copy for spreadsheet")
+    );
+  });
 
   // Set/replace the logo for the current draft and reflect it in the UI.
   function applyAndSaveLogo(dataUrl) {
