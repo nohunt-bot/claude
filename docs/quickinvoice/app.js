@@ -5,6 +5,7 @@
 
 const STORAGE_KEY = "quickinvoice.v1";
 const LOGO_KEY = "quickinvoice.logo";
+const SAVED_KEY = "quickinvoice.saved.v1";
 
 const defaultState = () => ({
   fromName: "",
@@ -47,6 +48,33 @@ function saveState(state) {
   } catch {
     /* storage full or blocked — preview still works in-memory */
   }
+}
+
+// ---- Saved invoices (a keepable list, separate from the autosaved draft) ----
+function loadSaved() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function persistSaved(list) {
+  try {
+    localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+  } catch {
+    /* storage full or blocked */
+  }
+}
+
+// "INV-001" -> "INV-002", preserving prefix and zero-padding.
+function bumpNumber(numStr) {
+  const s = String(numStr || "");
+  const m = s.match(/(\d+)(\D*)$/);
+  if (!m) return s ? s + "-2" : "INV-002";
+  const next = String(Number(m[1]) + 1).padStart(m[1].length, "0");
+  return s.slice(0, m.index) + next + m[2];
 }
 
 // ---- Money helpers ----
@@ -175,6 +203,8 @@ function renderItemsEditor(state) {
 // ---- Wiring ----
 function init() {
   let state = loadState();
+  // id of the saved-invoice entry the editor is currently bound to (null = unsaved draft)
+  let currentSavedId = null;
 
   // Bind top-level fields.
   document.querySelectorAll("[data-bind]").forEach((el) => {
@@ -261,8 +291,9 @@ function init() {
   });
 
   $("resetBtn").addEventListener("click", () => {
-    if (!confirm("Clear this invoice and start over?")) return;
+    if (!confirm("Start a new blank invoice? Your saved invoices are kept.")) return;
     state = defaultState();
+    currentSavedId = null;
     saveState(state);
     try { localStorage.removeItem(LOGO_KEY); } catch {}
     applyLogo("");
@@ -270,6 +301,7 @@ function init() {
     syncTopFields(state);
     renderItemsEditor(state);
     renderPreview(state);
+    renderSaved();
   });
 
   // Logo upload
@@ -314,8 +346,120 @@ function init() {
     applyLogo("");
   });
 
+  // ---- Saved invoices ----
+  const savedPanel = $("savedPanel");
+  const savedList = $("savedList");
+  const saveBtn = $("saveBtn");
+
+  // Set/replace the logo for the current draft and reflect it in the UI.
+  function applyAndSaveLogo(dataUrl) {
+    try {
+      if (dataUrl) localStorage.setItem(LOGO_KEY, dataUrl);
+      else localStorage.removeItem(LOGO_KEY);
+    } catch {}
+    logoInput.value = "";
+    applyLogo(dataUrl);
+  }
+
+  function renderSaved() {
+    const list = loadSaved();
+    if (!list.length) {
+      savedPanel.hidden = true;
+      savedList.innerHTML = "";
+      return;
+    }
+    savedPanel.hidden = false;
+    savedList.innerHTML = "";
+    // Newest first.
+    list.slice().reverse().forEach((entry) => {
+      const li = document.createElement("li");
+      li.className = "saved-row";
+      if (entry.id === currentSavedId) li.classList.add("is-current");
+      li.innerHTML = `
+        <button class="saved-open" type="button" data-open="${entry.id}">
+          <span class="saved-num"></span>
+          <span class="saved-meta"></span>
+        </button>
+        <span class="saved-actions">
+          <button class="btn btn-ghost btn-xs" type="button" data-dup="${entry.id}">Duplicate</button>
+          <button class="item-del" type="button" data-rm="${entry.id}" aria-label="Delete saved invoice">×</button>
+        </span>`;
+      const when = new Date(entry.savedAt).toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+      });
+      li.querySelector(".saved-num").textContent = entry.state.number || "Untitled";
+      li.querySelector(".saved-meta").textContent =
+        (entry.state.toName || "No client") + " · " + when;
+      savedList.appendChild(li);
+    });
+  }
+
+  function loadEntry(entry, { asDuplicate }) {
+    const snap = JSON.parse(JSON.stringify(entry.state));
+    if (asDuplicate) {
+      state = { ...snap, number: bumpNumber(snap.number) };
+      currentSavedId = null; // a duplicate is a fresh, unsaved invoice
+    } else {
+      state = snap;
+      currentSavedId = entry.id;
+    }
+    applyAndSaveLogo(entry.logo || "");
+    saveState(state);
+    syncTopFields(state);
+    renderItemsEditor(state);
+    renderPreview(state);
+    renderSaved();
+  }
+
+  saveBtn.addEventListener("click", () => {
+    const list = loadSaved();
+    const snap = {
+      state: JSON.parse(JSON.stringify(state)),
+      logo: localStorage.getItem(LOGO_KEY) || "",
+    };
+    const idx = currentSavedId ? list.findIndex((e) => e.id === currentSavedId) : -1;
+    let next;
+    if (idx >= 0) {
+      next = list.map((e, i) =>
+        i === idx ? { ...e, ...snap, savedAt: Date.now() } : e
+      );
+    } else {
+      currentSavedId =
+        "inv_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      next = [...list, { id: currentSavedId, savedAt: Date.now(), ...snap }];
+    }
+    persistSaved(next);
+    renderSaved();
+    saveBtn.textContent = "Saved ✓";
+    setTimeout(() => { saveBtn.textContent = "Save"; }, 1600);
+  });
+
+  savedList.addEventListener("click", (e) => {
+    const dup = e.target.closest("[data-dup]");
+    if (dup) {
+      const entry = loadSaved().find((x) => x.id === dup.dataset.dup);
+      if (entry) loadEntry(entry, { asDuplicate: true });
+      return;
+    }
+    const rm = e.target.closest("[data-rm]");
+    if (rm) {
+      if (!confirm("Delete this saved invoice?")) return;
+      persistSaved(loadSaved().filter((x) => x.id !== rm.dataset.rm));
+      if (currentSavedId === rm.dataset.rm) currentSavedId = null;
+      renderSaved();
+      return;
+    }
+    const open = e.target.closest("[data-open]");
+    if (open) {
+      const entry = loadSaved().find((x) => x.id === open.dataset.open);
+      if (entry) loadEntry(entry, { asDuplicate: false });
+    }
+  });
+
   renderItemsEditor(state);
   renderPreview(state);
+  renderSaved();
 }
 
 function syncTopFields(state) {

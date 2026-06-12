@@ -27,7 +27,8 @@
       <span class="brand-name">QuickInvoice</span>
     </div>
     <nav class="topbar-actions" aria-label="Primary">
-      <button id="resetBtn" class="btn btn-ghost" type="button">Reset</button>
+      <button id="saveBtn" class="btn btn-ghost" type="button">Save</button>
+      <button id="resetBtn" class="btn btn-ghost" type="button">New</button>
       <button id="shareBtn" class="btn btn-ghost" type="button">Share</button>
       <button id="printBtn" class="btn btn-solid" type="button">Download PDF</button>
     </nav>
@@ -90,6 +91,12 @@
           </label>
         </fieldset>
       </form>
+
+      <section id="savedPanel" class="saved no-print" aria-labelledby="saved-heading" hidden>
+        <h2 id="saved-heading" class="saved-title">Saved invoices</h2>
+        <ul id="savedList" class="saved-list"></ul>
+        <p class="saved-hint">Saved on this device only. Open to edit and re-download, or duplicate to start the next one.</p>
+      </section>
 
       <aside class="feedback no-print" aria-labelledby="feedback-heading">
         <p id="feedback-heading" class="feedback-title">QuickInvoice is free and always will be.</p>
