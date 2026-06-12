@@ -214,7 +214,10 @@ function computeTotals(state) {
 
 function fmt(state, amount) {
   const cur = (state.currency || "").trim() || "$";
-  return `${cur}${amount.toLocaleString(undefined, {
+  // Letter-ending codes (CHF, kr, Rs) read better with a space before the
+  // number; glyph symbols ($, €, C$, ₹) hug it. Keeps multi-currency tidy.
+  const sep = /[A-Za-z]$/.test(cur) ? " " : "";
+  return `${cur}${sep}${amount.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;

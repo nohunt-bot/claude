@@ -68,7 +68,23 @@
             <input class="inp" data-bind="number" placeholder="INV-001" />
           </label>
           <label class="lbl">Currency
-            <input class="inp" data-bind="currency" placeholder="$" maxlength="4" />
+            <input class="inp" data-bind="currency" placeholder="$ — or pick" maxlength="4" list="currencyList" autocomplete="off" />
+            <datalist id="currencyList">
+              <option value="$">USD — US Dollar</option>
+              <option value="€">EUR — Euro</option>
+              <option value="£">GBP — British Pound</option>
+              <option value="¥">JPY — Japanese Yen</option>
+              <option value="C$">CAD — Canadian Dollar</option>
+              <option value="A$">AUD — Australian Dollar</option>
+              <option value="₹">INR — Indian Rupee</option>
+              <option value="CN¥">CNY — Chinese Yuan</option>
+              <option value="CHF">CHF — Swiss Franc</option>
+              <option value="kr">SEK / NOK / DKK — Krona</option>
+              <option value="R$">BRL — Brazilian Real</option>
+              <option value="₩">KRW — Korean Won</option>
+              <option value="₱">PHP — Philippine Peso</option>
+              <option value="₪">ILS — Israeli Shekel</option>
+            </datalist>
           </label>
           <label class="lbl">Issued
             <input class="inp" type="date" data-bind="issued" />
