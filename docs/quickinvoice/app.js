@@ -287,6 +287,17 @@ function fmtDate(iso) {
   });
 }
 
+// Append a preset note to existing notes: keeps one note per line, skips exact dupes.
+function appendNote(existing, addition) {
+  const cur = (existing || "").trim();
+  const add = (addition || "").trim();
+  if (!add) return cur;
+  if (!cur) return add;
+  const lines = cur.split("\n").map((l) => l.trim());
+  if (lines.includes(add)) return cur;
+  return cur + "\n" + add;
+}
+
 // ---- Rendering ----
 const $ = (id) => document.getElementById(id);
 
@@ -427,6 +438,18 @@ function init() {
     state = { ...state, items: [...state.items, { desc: "", qty: "1", rate: "" }] };
     saveState(state);
     renderItemsEditor(state);
+    renderPreview(state);
+  });
+
+  // One-click note presets — append common payment notes without retyping.
+  const notesField = $("notesField");
+  $("notePresets").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-note]");
+    if (!btn) return;
+    const next = appendNote(state.notes, btn.dataset.note);
+    state = { ...state, notes: next };
+    notesField.value = next;
+    saveState(state);
     renderPreview(state);
   });
 
@@ -882,4 +905,10 @@ function syncTopFields(state) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", init);
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", init);
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { appendNote };
+}

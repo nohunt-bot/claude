@@ -277,6 +277,17 @@ textarea.inp { resize: vertical; line-height: 1.45; }
 .client-rm:hover { color: var(--accent); }
 #saveClientBtn { margin-top: 0.6rem; }
 
+/* ---------- Note presets ---------- */
+.note-presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+.note-preset {
+  font: inherit; font-size: 0.78rem; cursor: pointer;
+  color: var(--ink-soft); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 0.3rem 0.7rem; line-height: 1.1;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.note-preset:hover { border-color: var(--accent); color: var(--ink); background: color-mix(in oklch, var(--accent) 4%, var(--surface)); }
+
 /* ---------- Feedback ---------- */
 .feedback {
   margin-top: 1.5rem;

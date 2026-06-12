@@ -108,7 +108,13 @@
             <input class="inp" type="number" step="0.01" min="0" data-bind="discountRate" placeholder="0" />
           </label>
           <label class="lbl span-2">Notes
-            <textarea class="inp" data-bind="notes" rows="2" placeholder="Payment terms, bank details, thank you"></textarea>
+            <textarea id="notesField" class="inp" data-bind="notes" rows="2" placeholder="Payment terms, bank details, thank you"></textarea>
+            <div id="notePresets" class="note-presets no-print" aria-label="Quick notes">
+              <button class="note-preset" type="button" data-note="Thank you for your business!">+ Thank you</button>
+              <button class="note-preset" type="button" data-note="Late payments are subject to a 1.5% monthly fee.">+ Late fee</button>
+              <button class="note-preset" type="button" data-note="Payment due within 30 days of the invoice date.">+ Net 30</button>
+              <button class="note-preset" type="button" data-note="Pay by bank transfer — Bank: , Account: , Routing/Sort: ">+ Bank details</button>
+            </div>
           </label>
         </fieldset>
       </form>
